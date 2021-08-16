@@ -8,6 +8,7 @@ export const connect = ({ db }: TMongooseOptions): void => {
       .connect(db, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useCreateIndex: true
       })
       .then(() => {
         console.log("[server]: Mongodb connected");

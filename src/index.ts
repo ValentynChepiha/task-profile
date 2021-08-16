@@ -23,7 +23,7 @@ const start = (): void => {
       console.log(`[server]: Server is running at https://localhost:${PORT}`)
     );
     connect({ db: DB_URL });
-    routes({app});
+    routes({ app });
   } catch (err) {
     let e: Error = err;
     console.log(`[server]: ${e.message}`);
