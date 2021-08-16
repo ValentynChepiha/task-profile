@@ -5,7 +5,7 @@ import { userServices } from "../../services/user";
 import { fileServices } from "../../services/file";
 
 class UserController {
-  async saveData(req: Request, res: Response, photoDirectory: string) {
+  async saveData(req: Request, res: Response) {
     try {
       const { firstName, lastName, email, file: photo } = req.body;
 
