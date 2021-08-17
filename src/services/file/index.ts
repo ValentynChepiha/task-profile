@@ -1,23 +1,29 @@
 import { v4 as uuidV4 } from "uuid";
 import * as fs from "fs";
-import { IFileDto } from "../../dto/file";
-import {directoryServices} from "../directory";
+import * as path from "path";
+// import { IFileDto } from "../../dto/file";
+import { Request } from "express";
+import { directoryServices } from "../directory";
 
 class FileServices {
+  photoDirectory = directoryServices.checkDirectory([
+    "..",
+    "..",
+    "..",
+    "public",
+    "images",
+  ]);
 
-  // ???? обдумати де буде запускатися екземплар класу
-  // де краще зробити цю змінну
-  photoDirectory = directoryServices.checkDirectory(["..", "public", "images"]);
-
-  createPhoto(photo: IFileDto, photoDirectory: string): string {
-
+  // createPhoto(photo: IFileDto): string {
+  createPhoto(req: Request): string {
+    const { file: photo } = req;
     const photoId = uuidV4();
+    // @ts-ignore
     const photoExtension = photo.originalname.split(".").pop();
     const photoName = `${photoId}.${photoExtension}`;
-
-    fs.copyFileSync(photoDirectory);
-
-    console.log(photoName, photoDirectory);
+    const photoPath = path.resolve(this.photoDirectory, photoName);
+    // @ts-ignore
+    fs.writeFileSync(photoPath, photo.buffer);
     return photoId;
   }
 

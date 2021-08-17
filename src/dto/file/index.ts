@@ -1,6 +1,7 @@
 export interface IFileDto {
   originalname: string;
-  destination: string;
-  filename: string;
+  buffer: Buffer;
   size: number;
 }
+
+

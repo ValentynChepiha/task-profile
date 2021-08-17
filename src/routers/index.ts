@@ -8,20 +8,16 @@ const upload = multer({ storage: storage });
 
 export const routes = ({ app }: TRoutesOptions): void => {
   app.get("/api/user/:id", (req: Request, res: Response) => {
-
     console.log('routes / get :: ');
-
     userController.getUser();
   });
   app.post("/api/user", upload.single("photo"), (req: Request, res: Response) => {
-
-    console.log('routes / post :: ');
     try {
       userController.saveData(req, res);
     } catch (err) {
       let e:Error = err;
       console.log(e.message);
-      res.status(400).send('Error upload file');
+      res.status(500).send('Error upload file');
     }
   });
 };

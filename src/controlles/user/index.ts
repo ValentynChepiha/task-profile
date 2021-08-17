@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserModel } from "../../models/user";
+import {IUserDto} from "../../dto/user";
 
 import { userServices } from "../../services/user";
 import { fileServices } from "../../services/file";
@@ -7,18 +8,15 @@ import { fileServices } from "../../services/file";
 class UserController {
   async saveData(req: Request, res: Response) {
     try {
-      const { firstName, lastName, email, file: photo } = req.body;
+      const { firstName, lastName, email } = req.body;
+      const photoId = await fileServices.createPhoto(req);
 
-      console.log(firstName, lastName, email, photo);
-
-      const photoId = await fileServices.createPhoto(photo, photoDirectory);
-
-      const dataUser = new UserModel({
+      const dataUser = new IUserDto(
         firstName,
         lastName,
         email,
         photoId,
-      });
+      );
 
       const userId = await userServices.saveProfile(dataUser);
       res.status(200).send('All ok!');
@@ -27,7 +25,7 @@ class UserController {
       // }
       // res.status(500).send("User do not save");
     } catch (err) {
-      return res.status(400).send("Error create profile, error save data");
+      return res.status(500).send("Error create profile, error save data");
     }
   }
 
