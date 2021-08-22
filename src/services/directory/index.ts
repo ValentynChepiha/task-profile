@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
+import { errorServices } from "../error";
 
 class DirectoryServices {
   checkDirectory(directoryArray: string[]): string {
@@ -11,7 +12,10 @@ class DirectoryServices {
       return directoryPath;
     } catch (err) {
       let e: Error = err;
-      throw new Error(`[server]: wrong check dir ${directoryArray}, error: ${e.message}`);
+      throw errorServices.serverError(
+        `Directory ${directoryArray}, error: ${e.message}`,
+        ["Server error"]
+      );
     }
   }
 
@@ -20,7 +24,10 @@ class DirectoryServices {
       fs.mkdirSync(directoryPath, { recursive: true });
     } catch (err) {
       let e: Error = err;
-      throw new Error(`[server]: Can't create directory ${directoryPath}, error: ${e.message}`);
+      throw errorServices.serverError(
+        `Can't create directory ${directoryPath}, error: ${e.message}`,
+        ["Server error"]
+      );
     }
   }
 }

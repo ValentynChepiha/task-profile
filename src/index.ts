@@ -15,18 +15,19 @@ const app: Application = express();
 app.use(bodyPasrer.json());
 app.use(bodyPasrer.urlencoded({ extended: true }));
 app.use(cors());
+app.use('/profile', express.static(__dirname + '/public/images'));
 
 const start = (): void => {
   try {
     app.get("/", (req: Request, res: Response) => res.send("REST API Server"));
     app.listen(PORT, (): void =>
-      console.log(`[server]: Server is running at https://localhost:${PORT}`)
+      console.log(`[server] Server is running at https://localhost:${PORT}`)
     );
     connect({ db: DB_URL });
     routes({ app });
   } catch (err) {
     let e: Error = err;
-    console.log(`[server]: ${e.message}`);
+    console.log(`[server] ${e.message}`);
     process.exit(1);
   }
 };

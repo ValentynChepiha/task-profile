@@ -4,6 +4,6 @@ export interface IUserDocument extends Document {
   firstName: string;
   lastName: string;
   email: string;
-  photoId: string;
+  photo: string;
 }
 
