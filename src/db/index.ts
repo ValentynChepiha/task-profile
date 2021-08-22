@@ -8,13 +8,14 @@ export const connect = ({ db }: TMongooseOptions): void => {
       .connect(db, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useCreateIndex: true,
       })
       .then(() => {
-        console.log("[server]: Mongodb connected");
+        console.log("[server] Mongodb connected");
       })
       .catch((err) => {
         let e: Error = err;
-        console.log(`[server]: Error connection to db: ${e.message}`);
+        console.log(`[server] Error connection to db: ${e.message}`);
         return process.exit(1);
       });
   };

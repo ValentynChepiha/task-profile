@@ -7,9 +7,3 @@ export interface IUserDocument extends Document {
   photo: string;
 }
 
-export interface IUserDto {
-  email: IUserDocument["email"];
-  firstName: IUserDocument["firstName"];
-  lastName: IUserDocument["lastName"];
-  photo: IUserDocument["photo"];
-}
